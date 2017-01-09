@@ -10,9 +10,9 @@
     state: link
     force: yes
     src: "{{ ruby_git_src_dir }}"
-    dest: "/home/{{ user }}/ruby"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    dest: "/home/{{ ansible_user_id }}/ruby"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
 - name: "autoconf"
   command: "autoconf"
   args:
@@ -28,8 +28,8 @@
   file:
     state: directory
     path: "{{ ruby_git_src_dir }}/build"
-    owner: "{{ user }}"
-    group: "{{ group }}"
+    owner: "{{ ansible_user_uid }}"
+    group: "{{ ansible_user_gid }}"
     mode: 0755
 - name: "configure"
   command: '../configure --prefix="{{ ruby_git_prefix }}" --with-openssl-dir="{{ ruby_git_openssl_dir }}" --enable-shared --enable-debug-env cppflags="{{ ruby_git_cppflags }}" --with-valgrind --with-baseruby=/usr/bin/ruby --disable-install-doc CC="ccache clang"'

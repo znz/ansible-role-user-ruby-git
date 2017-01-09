@@ -1,11 +1,9 @@
 ---
 git_update: no
 git_depth: 1
-ruby_git_user: "vagrant"
-ruby_git_group: "vagrant"
-ruby_git_src_dir: "/home/{{ ruby_git_user }}/s/github.com/ruby/ruby"
-ruby_git_prefix: "/home/{{ ruby_git_user }}/.anyenv/envs/rbenv/versions/git"
+ruby_git_src_dir: "/home/{{ ansible_user_id }}/s/github.com/ruby/ruby"
+ruby_git_prefix: "/home/{{ ansible_user_id }}/.anyenv/envs/rbenv/versions/git"
 ruby_git_openssl_dir: "{{ libressl_prefix }}"
 ruby_git_cppflags: "-DRUBY_DEBUG_ENV -DARRAY_DEBUG"
 #ruby_git_cppflags: "-DRUBY_DEBUG_ENV -DARRAY_DEBUG -DSHARABLE_MIDDLE_SUBSTRING=1"
-ruby_git_rbenv_root: "/home/{{ ruby_git_user }}/.anyenv/envs/rbenv"
+ruby_git_rbenv_root: "/home/{{ ansible_user_id }}/.anyenv/envs/rbenv"

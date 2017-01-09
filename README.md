@@ -11,8 +11,6 @@
 
 - `git_update`: `update` option of [git module](http://docs.ansible.com/git_module.html)
 - `git_depth`: `depth` option of [git module](http://docs.ansible.com/git_module.html)
-- `ruby_git_user`: user
-- `ruby_git_group`: group
 - `ruby_git_src_dir`: git clone directory
 - `ruby_git_prefix`: `--prefix` argument of configure
 - `ruby_git_openssl_dir`: `--with-openssl-dir` argument of configure
