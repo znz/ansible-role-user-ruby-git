@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Kazuhiro NISHIYAMA
+  description: ruby from git into home
+  license: MIT
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty
+    - xenial
+  - name: Debian
+    versions:
+    - wheezy
+    - jessie
+
+  categories:
+  - linux
+
+dependencies: []

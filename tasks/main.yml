@@ -1,0 +1,52 @@
+---
+- name: "ruby git"
+  git:
+    repo: https://github.com/ruby/ruby
+    dest: "{{ ruby_git_src_dir }}"
+    update: "{{ git_update }}"
+    depth: "{{ git_depth }}"
+- name: "symlink ~/ruby"
+  file:
+    state: link
+    force: yes
+    src: "{{ ruby_git_src_dir }}"
+    dest: "/home/{{ user }}/ruby"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+- name: "autoconf"
+  command: "autoconf"
+  args:
+    chdir: "{{ ruby_git_src_dir }}"
+    creates: "{{ ruby_git_src_dir }}/configure"
+- name: "exclude /build/"
+  lineinfile:
+    dest: "{{ ruby_git_src_dir }}/.git/info/exclude"
+    regexp: '^/build/$'
+    line: '/build/'
+    create: yes
+- name: "{{ ruby_git_src_dir }}/build"
+  file:
+    state: directory
+    path: "{{ ruby_git_src_dir }}/build"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0755
+- name: "configure"
+  command: '../configure --prefix="{{ ruby_git_prefix }}" --with-openssl-dir="{{ ruby_git_openssl_dir }}" --enable-shared --enable-debug-env cppflags="{{ ruby_git_cppflags }}" --with-valgrind --with-baseruby=/usr/bin/ruby --disable-install-doc CC="ccache clang"'
+  args:
+    chdir: "{{ ruby_git_src_dir }}/build"
+    creates: "{{ ruby_git_src_dir }}/build/Makefile"
+- name: "make"
+  command: "make"
+  args:
+    chdir: "{{ ruby_git_src_dir }}/build"
+    creates: "{{ ruby_git_src_dir }}/build/ruby"
+- name: "make install"
+  command: "make install"
+  args:
+    chdir: "{{ ruby_git_src_dir }}/build"
+    creates: "{{ ruby_git_prefix }}/bin/ruby"
+- name: "rbenv global git"
+  copy:
+    content: "git"
+    dest: "{{ ruby_git_rbenv_root }}/version"
